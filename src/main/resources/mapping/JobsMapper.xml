@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.stujobs.mapper.JobsMapper">
+  <resultMap id="BaseResultMap" type="com.example.stujobs.pojo.Jobs">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="praise" jdbcType="VARCHAR" property="praise" />
+    <result column="pingjia" jdbcType="VARCHAR" property="pingjia" />
+    <result column="hr" jdbcType="VARCHAR" property="hr" />
+    <result column="more" jdbcType="VARCHAR" property="more" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.stujobs.pojo.Jobs">
+    <result column="request" jdbcType="LONGVARCHAR" property="request" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, position, company, location, tags, price, praise, pingjia, hr, more
+  </sql>
+  <sql id="Blob_Column_List">
+    request
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.stujobs.pojo.JobsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from jobs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.stujobs.pojo.JobsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jobs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from jobs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jobs
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.stujobs.pojo.JobsExample">
+    delete from jobs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.stujobs.pojo.Jobs">
+    insert into jobs (id, position, company, 
+      location, tags, price, 
+      praise, pingjia, hr, 
+      more, request)
+    values (#{id,jdbcType=INTEGER}, #{position,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      #{praise,jdbcType=VARCHAR}, #{pingjia,jdbcType=VARCHAR}, #{hr,jdbcType=VARCHAR}, 
+      #{more,jdbcType=VARCHAR}, #{request,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.stujobs.pojo.Jobs">
+    insert into jobs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="praise != null">
+        praise,
+      </if>
+      <if test="pingjia != null">
+        pingjia,
+      </if>
+      <if test="hr != null">
+        hr,
+      </if>
+      <if test="more != null">
+        more,
+      </if>
+      <if test="request != null">
+        request,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="praise != null">
+        #{praise,jdbcType=VARCHAR},
+      </if>
+      <if test="pingjia != null">
+        #{pingjia,jdbcType=VARCHAR},
+      </if>
+      <if test="hr != null">
+        #{hr,jdbcType=VARCHAR},
+      </if>
+      <if test="more != null">
+        #{more,jdbcType=VARCHAR},
+      </if>
+      <if test="request != null">
+        #{request,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.stujobs.pojo.JobsExample" resultType="java.lang.Long">
+    select count(*) from jobs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update jobs
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.position != null">
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.company != null">
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tags != null">
+        tags = #{record.tags,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.praise != null">
+        praise = #{record.praise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pingjia != null">
+        pingjia = #{record.pingjia,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hr != null">
+        hr = #{record.hr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.more != null">
+        more = #{record.more,jdbcType=VARCHAR},
+      </if>
+      <if test="record.request != null">
+        request = #{record.request,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update jobs
+    set id = #{record.id,jdbcType=INTEGER},
+      position = #{record.position,jdbcType=VARCHAR},
+      company = #{record.company,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      tags = #{record.tags,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      praise = #{record.praise,jdbcType=VARCHAR},
+      pingjia = #{record.pingjia,jdbcType=VARCHAR},
+      hr = #{record.hr,jdbcType=VARCHAR},
+      more = #{record.more,jdbcType=VARCHAR},
+      request = #{record.request,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update jobs
+    set id = #{record.id,jdbcType=INTEGER},
+      position = #{record.position,jdbcType=VARCHAR},
+      company = #{record.company,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      tags = #{record.tags,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      praise = #{record.praise,jdbcType=VARCHAR},
+      pingjia = #{record.pingjia,jdbcType=VARCHAR},
+      hr = #{record.hr,jdbcType=VARCHAR},
+      more = #{record.more,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.stujobs.pojo.Jobs">
+    update jobs
+    <set>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="praise != null">
+        praise = #{praise,jdbcType=VARCHAR},
+      </if>
+      <if test="pingjia != null">
+        pingjia = #{pingjia,jdbcType=VARCHAR},
+      </if>
+      <if test="hr != null">
+        hr = #{hr,jdbcType=VARCHAR},
+      </if>
+      <if test="more != null">
+        more = #{more,jdbcType=VARCHAR},
+      </if>
+      <if test="request != null">
+        request = #{request,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.stujobs.pojo.Jobs">
+    update jobs
+    set position = #{position,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      praise = #{praise,jdbcType=VARCHAR},
+      pingjia = #{pingjia,jdbcType=VARCHAR},
+      hr = #{hr,jdbcType=VARCHAR},
+      more = #{more,jdbcType=VARCHAR},
+      request = #{request,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.stujobs.pojo.Jobs">
+    update jobs
+    set position = #{position,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      praise = #{praise,jdbcType=VARCHAR},
+      pingjia = #{pingjia,jdbcType=VARCHAR},
+      hr = #{hr,jdbcType=VARCHAR},
+      more = #{more,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
